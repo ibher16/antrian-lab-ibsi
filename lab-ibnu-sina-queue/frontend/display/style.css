@@ -7,6 +7,11 @@
     --text-white: #ffffff;
     --text-muted: #94a3b8;
     --accent-red: #ef4444;
+
+    /* Scaling Variables */
+    --header-height: 10vh;
+    --footer-height: 7vh;
+    --main-gap: 1.5vw;
 }
 
 * {
@@ -27,14 +32,14 @@ body {
 
 /* Header */
 header {
-    height: 90px;
+    height: var(--header-height);
     background: rgba(17, 20, 24, 0.95);
-    border-bottom: 1px solid var(--border-dark);
+    border-bottom: 2px solid var(--border-dark);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
-    backdrop-filter: blur(8px);
+    padding: 0 4vw;
+    backdrop-filter: blur(10px);
     z-index: 10;
 }
 
@@ -47,29 +52,29 @@ header {
 .brand-icon {
     background: rgba(19, 127, 236, 0.1);
     color: var(--primary);
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 1.5vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .brand-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 4vh;
+    height: 4vh;
     fill: currentColor;
 }
 
 .brand-text h1 {
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 3vh, 2.5rem);
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 .brand-text p {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 1.8vh, 1.2rem);
     font-weight: 500;
 }
 
@@ -80,12 +85,12 @@ header {
 
 .widget-time {
     background: var(--primary);
-    padding: 0.5rem 1.25rem;
-    border-radius: 10px;
+    padding: 1.2vh 2.5vw;
+    border-radius: 1.5vh;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    box-shadow: 0 4px 12px var(--primary-glow);
+    gap: 1.5vw;
+    box-shadow: 0 1vh 2vh var(--primary-glow);
 }
 
 .time-display {
@@ -95,12 +100,12 @@ header {
 .time-clock {
     display: block;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vh, 3.5vh);
 }
 
 .time-date {
     display: block;
-    font-size: 0.75rem;
+    font-size: clamp(0.6rem, 1.5vh, 1.8vh);
     opacity: 0.9;
 }
 
@@ -108,12 +113,12 @@ header {
 main {
     flex: 1;
     display: grid;
-    grid-template-columns: 8fr 4fr;
-    /* 2/3 and 1/3 split */
-    gap: 1.5rem;
-    padding: 1.5rem;
-    height: calc(100vh - 90px - 50px);
-    /* minus header and footer */
+    grid-template-columns: 8.5fr 3.5fr;
+    gap: var(--main-gap);
+    padding: var(--main-gap);
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-height: 0;
+    /* Important for grid clipping */
 }
 
 /* Main Card (Now Serving) */
@@ -132,12 +137,12 @@ main {
 
 .glow-bg {
     position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 500px;
-    height: 500px;
+    top: -20vh;
+    left: -20vh;
+    width: 80vh;
+    height: 80vh;
     background: var(--primary);
-    filter: blur(150px);
+    filter: blur(20vh);
     opacity: 0.15;
     border-radius: 50%;
     pointer-events: none;
@@ -145,33 +150,35 @@ main {
 
 .serving-badge {
     background: rgba(19, 127, 236, 0.1);
-    border: 1px solid rgba(19, 127, 236, 0.2);
+    border: 2px solid rgba(19, 127, 236, 0.2);
     color: var(--primary);
-    padding: 0.5rem 1.5rem;
+    padding: 1vh 3vw;
     border-radius: 999px;
-    margin-bottom: 2rem;
+    margin-bottom: 4vh;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: bold;
+    gap: 1vw;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
+    font-size: clamp(0.8rem, 2vh, 2.5vh);
     animation: pulse 2s infinite;
 }
 
 .serving-badge svg {
-    width: 24px;
-    height: 24px;
+    width: 3vh;
+    height: 3vh;
     fill: currentColor;
 }
 
 .big-number {
-    font-size: 14rem;
+    font-size: clamp(8rem, 30vh, 40vh);
+    /* Scale with height primarily */
     font-weight: 900;
-    line-height: 1;
+    line-height: 0.9;
     letter-spacing: -0.05em;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    margin-bottom: 2rem;
+    text-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
+    margin-bottom: 2vh;
 }
 
 .counter-box {
@@ -188,11 +195,11 @@ main {
 
 .counter-pill {
     background: var(--primary);
-    padding: 1rem 3rem;
-    border-radius: 1rem;
-    font-size: 2.5rem;
+    padding: 1.5vh 5vw;
+    border-radius: 1.5vh;
+    font-size: clamp(1.5rem, 6vh, 8vh);
     font-weight: 800;
-    box-shadow: 0 10px 25px var(--primary-glow);
+    box-shadow: 0 1vh 3vh var(--primary-glow);
 }
 
 /* Sidebar */
@@ -227,29 +234,28 @@ main {
     left: 0;
     right: 0;
     bottom: auto;
-    padding: 1.5rem;
+    padding: 2vh 2vw;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
     pointer-events: none;
-    /* Let clicks pass through to video controls */
 }
 
 .live-badge {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     color: var(--primary);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
+    padding: 0.4vh 1vw;
+    border-radius: 0.5vh;
+    font-size: clamp(0.7rem, 1.5vh, 1.2rem);
     font-weight: bold;
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    margin-bottom: 0.5rem;
+    gap: 0.5vw;
+    margin-bottom: 1vh;
 }
 
 .live-dot {
-    width: 6px;
-    height: 6px;
+    width: 0.8vh;
+    height: 0.8vh;
     background: var(--accent-red);
     border-radius: 50%;
 }
@@ -291,10 +297,10 @@ main {
     justify-content: space-between;
     align-items: center;
     background: rgba(40, 48, 57, 0.5);
-    padding: 1rem;
-    border-radius: 0.75rem;
+    padding: 1.5vh 1.5vw;
+    border-radius: 1vh;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1vh;
 }
 
 .history-col {
@@ -303,32 +309,32 @@ main {
 }
 
 .label-sm {
-    font-size: 0.75rem;
+    font-size: clamp(0.7rem, 1.5vh, 1.2rem);
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 600;
 }
 
 .val-xl {
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 4vh, 6vh);
     font-weight: bold;
 }
 
 .divider-v {
     width: 1px;
-    height: 32px;
+    height: 5vh;
     background: rgba(255, 255, 255, 0.1);
 }
 
 /* Footer Ticker */
 footer {
-    height: 50px;
+    height: var(--footer-height);
     background: var(--primary);
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -0.5vh 2vh rgba(0, 0, 0, 0.3);
 }
 
 .ticker-label {
@@ -352,8 +358,11 @@ footer {
     display: inline-block;
     white-space: nowrap;
     padding-left: 100%;
-    animation: marquee 30s linear infinite;
-    font-weight: 500;
+    animation: marquee 40s linear infinite;
+    /* Slower for readability on large screen */
+    font-weight: 600;
+    font-size: clamp(1rem, 2.5vh, 2rem);
+    padding-bottom: 0.2vh;
 }
 
 @keyframes marquee {
