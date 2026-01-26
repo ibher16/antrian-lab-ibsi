@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Waiting Area Display</title>
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z" />
+                </svg>
+            </div>
+            <div class="brand-text">
+                <h1>Lab Ibnu Sina</h1>
+                <p>Sistem Antrian Terpadu</p>
+            </div>
+        </div>
+
+        <div class="widgets">
+            <div class="widget-time">
+                <svg style="width:24px; height:24px; fill:white" viewBox="0 0 24 24">
+                    <path
+                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zM12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                </svg>
+                <div class="time-display">
+                    <span class="time-clock" id="clock-time">--:--</span>
+                    <span class="time-date" id="clock-date">--</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Left: Now Serving -->
+        <div class="now-serving-card">
+            <div class="glow-bg"></div>
+
+            <div class="serving-badge">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 12l-6-6v4c-5.55 0-8 3.58-8 8 0-2.76 2.24-5 5-5v4l6-6zM3 3h18v2H3z" />
+                </svg>
+                <span>ANTRIAN SAAT INI</span>
+            </div>
+
+            <div class="big-number" id="current-number">--</div>
+
+            <div class="counter-box">
+                <div class="counter-label">SILAKAN MENUJU KE</div>
+                <div class="counter-pill" id="current-counter">LOKET --</div>
+            </div>
+        </div>
+
+        <!-- Right: Sidebar -->
+        <div class="sidebar">
+            <!-- Video Placeholder -->
+            <div class="media-player">
+                <div class="media-content"></div>
+                <div class="media-overlay">
+                    <div class="live-badge">
+                        <div class="live-dot"></div> LIVE INFO
+                    </div>
+                    <h3 style="margin-bottom: 2px;">Pentingnya Mencuci Tangan</h3>
+                    <p style="font-size: 0.8rem; opacity: 0.8;">Tips Kesehatan Harian</p>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="history-card">
+                <div class="history-header">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
+                    </svg>
+                    <span>PANGGILAN TERAKHIR</span>
+                </div>
+                <div class="history-list" id="history-list">
+                    <!-- History Item Example (Injected by JS) -->
+                    <!-- <div class="history-item">
+                        <div class="history-col">
+                            <span class="label-sm">Nomor</span>
+                            <span class="val-xl">A-004</span>
+                        </div>
+                        <div class="divider-v"></div>
+                        <div class="history-col" style="align-items: flex-end;">
+                            <span class="label-sm">Loket</span>
+                            <span class="val-xl" style="color: var(--primary);">02</span>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="ticker-label">INFO</div>
+        <div class="ticker-wrap">
+            <div class="ticker-content">
+                Selamat datang di Laboratorium Ibnu Sina Balikpapan. Mohon menunggu nomor antrean Anda dipanggil. Tetap
+                patuhi protokol kesehatan. Jadwal Dokter Spesialis Patologi Klinik: Senin-Sabtu 08.00 - 15.00 WITA.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/websocket.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

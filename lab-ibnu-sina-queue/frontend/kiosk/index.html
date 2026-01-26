@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Patient Kiosk Check-in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z" />
+                    </svg>
+                </div>
+                <h2>Lab Ibnu Sina</h2>
+            </div>
+            <div class="time-section">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <svg style="width:20px; height:20px; fill:currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+                    </svg>
+                    <span id="current-date">Monday, Oct 24</span>
+                </div>
+                <div class="time-badge">
+                    <span id="current-time">08:00 AM</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="hero-text">
+                <h1>Welcome, Patient</h1>
+                <h2>Please touch a button below to select your service</h2>
+            </div>
+
+            <!-- Service Cards -->
+            <div class="service-grid">
+                <!-- Check-up Lab -->
+                <button class="service-card card-blue" onclick="selectService(1)">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+                        </svg>
+                    </div>
+                    <div class="card-title">Check-up Lab</div>
+                    <div class="card-desc">Blood tests, Urine tests, General check-up</div>
+                </button>
+
+                <!-- PCR / Swab -->
+                <button class="service-card card-green" onclick="selectService(2)">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M7 19c-1.1 0-2 .9-2 2h14c0-1.1-.9-2-2-2h-3v-2h2c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h2v2H7zM7 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v1H7V6z" />
+                        </svg>
+                    </div>
+                    <div class="card-title">PCR / Swab Test</div>
+                    <div class="card-desc">Antigen, PCR, Covid-19 Screening</div>
+                </button>
+
+                <!-- Result -->
+                <button class="service-card card-orange" onclick="selectService(3)">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 12v2H8v-4h8v2zm2-2v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z" />
+                        </svg>
+                    </div>
+                    <div class="card-title">Result Collection</div>
+                    <div class="card-desc">Print lab results, Doctor notes</div>
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="help-pill">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                </svg>
+                <span>Need assistance? Please ask staff at Counter 1</span>
+            </div>
+            <p class="footer-info">Operating Hours: 08:00 - 20:00 • System v2.4.1</p>
+        </footer>
+
+        <!-- Modal -->
+        <div id="ticket-modal" class="modal-overlay">
+            <div class="modal-content" id="modal-content">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                </div>
+                <h3>Ticket Created</h3>
+                <div class="ticket-box">
+                    <p style="color: grey; font-size: 0.9rem;">Your Number</p>
+                    <p id="ticket-number" class="ticket-number">A-001</p>
+                    <p id="service-name" style="color: white; margin-top: 0.5rem;">Check-up Lab</p>
+                </div>
+                <p style="color: grey;">Please wait for your number to be called.</p>
+                <p style="color: #4b5563; font-size: 0.8rem; margin-top: 1rem;">Printing ticket...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Area (Hidden on Screen) -->
+    <div id="print-area">
+        <div class="print-header">LAB IBNU SINA</div>
+        <div class="print-subheader">Balikpapan</div>
+        <div class="print-divider"></div>
+        <div class="print-label">NOMOR ANTRIAN</div>
+        <div class="print-number" id="p-number">A-000</div>
+        <div class="print-category" id="p-category">CHECK-UP LAB</div>
+        <div class="print-divider"></div>
+        <div class="print-time" id="p-time">01/01/2026, 12:00</div>
+        <div class="print-thanks">Terima kasih telah menunggu</div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,432 @@
+:root {
+    --primary: #137fec;
+    --primary-bg: #e6f0fd;
+    --text-main: #111418;
+    --text-muted: #637588;
+    --bg-light: #f6f7f8;
+    --bg-dark: #101922;
+
+    --lab-blue: #2563eb;
+    --lab-blue-dark: #1d4ed8;
+    --pcr-green: #059669;
+    --pcr-green-dark: #047857;
+    --res-orange: #f97316;
+    --res-orange-dark: #c2410c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-dark);
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid #283039;
+    background-color: var(--bg-dark);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(19, 127, 236, 0.2);
+    color: var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+}
+
+.time-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: #9dabb9;
+    font-weight: 500;
+}
+
+.time-badge {
+    background: #283039;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hero-text {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.hero-text h2 {
+    font-size: 1.25rem;
+    color: #9dabb9;
+    font-weight: 500;
+}
+
+/* Grid */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    height: 500px;
+}
+
+.service-card {
+    position: relative;
+    border: none;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.service-card:active {
+    transform: scale(0.98);
+}
+
+/* Card Variants */
+.card-blue {
+    background: linear-gradient(135deg, var(--lab-blue), var(--lab-blue-dark));
+}
+
+.card-green {
+    background: linear-gradient(135deg, var(--pcr-green), var(--pcr-green-dark));
+}
+
+.card-orange {
+    background: linear-gradient(135deg, var(--res-orange), var(--res-orange-dark));
+}
+
+.card-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-icon svg {
+    fill: white;
+    width: 48px;
+    height: 48px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.card-desc {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid #283039;
+    background-color: var(--bg-dark);
+}
+
+.help-pill {
+    background: #283039;
+    color: #9dabb9;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.help-pill svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.footer-info {
+    color: #586472;
+    font-size: 0.75rem;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 50;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #111418;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+}
+
+.modal-overlay.open .modal-content {
+    transform: scale(1);
+}
+
+.success-icon {
+    color: var(--pcr-green);
+    margin-bottom: 1rem;
+}
+
+.success-icon svg {
+    width: 64px;
+    height: 64px;
+    fill: currentColor;
+}
+
+.ticket-box {
+    background: #283039;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 2px dashed #4b5563;
+    margin: 1.5rem 0;
+}
+
+.ticket-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .service-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        overflow-y: auto;
+    }
+}
+
+/* ============================
+   THERMAL PRINT STYLES
+   Ukuran: 58mm thermal printer
+   ============================ */
+
+/* Hide print area on screen */
+#print-area {
+    display: none;
+}
+
+/* Print Media Query */
+@media print {
+
+    /* Hide everything except print area */
+    body * {
+        visibility: hidden;
+    }
+
+    #print-area,
+    #print-area * {
+        visibility: visible;
+    }
+
+    /* Reset page for thermal */
+    @page {
+        size: 58mm auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial Narrow', Arial, sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Print Area Container */
+    #print-area {
+        display: block !important;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 58mm;
+        background: white;
+        padding: 3mm;
+        text-align: center;
+    }
+
+    /* Header Lab Name */
+    .print-header {
+        font-size: 14pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0;
+        padding-bottom: 2mm;
+        border-bottom: 1px dashed #000;
+    }
+
+    /* Subheader Location */
+    .print-subheader {
+        font-size: 9pt;
+        margin-bottom: 2mm;
+    }
+
+    /* Label "NOMOR ANTRIAN" */
+    .print-label {
+        font-size: 8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2mm;
+        color: #333;
+    }
+
+    /* Queue Number - BIG */
+    .print-number {
+        font-size: 36pt;
+        font-weight: 900;
+        line-height: 1;
+        margin: 2mm 0;
+        letter-spacing: 2px;
+    }
+
+    /* Service Category */
+    .print-category {
+        font-size: 11pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: #000;
+        color: #fff !important;
+        padding: 2mm 3mm;
+        margin: 3mm 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Divider */
+    .print-divider {
+        border-top: 1px dashed #000;
+        margin: 3mm 0;
+    }
+
+    /* Footer Text */
+    .print-footer {
+        font-size: 9pt;
+        color: #333;
+        margin-bottom: 1mm;
+    }
+
+    /* Date/Time */
+    .print-time {
+        font-size: 8pt;
+        color: #666;
+        margin-bottom: 3mm;
+    }
+
+    /* Thank you message (optional) */
+    .print-thanks {
+        font-size: 8pt;
+        font-style: italic;
+        margin-top: 2mm;
+        padding-top: 2mm;
+        border-top: 1px dashed #000;
+    }
+}

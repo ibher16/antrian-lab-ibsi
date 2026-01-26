@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Panel - Lab Ibnu Sina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z" />
+                </svg>
+            </div>
+            <span>Lab Ibnu Sina</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-section="queue">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+                </svg>
+                <span>Panggil Antrian</span>
+            </a>
+            <a href="#" class="nav-item" data-section="settings">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                </svg>
+                <span>Pengaturan Display</span>
+            </a>
+        </nav>
+
+        <div class="counter-selector">
+            <label>Loket Anda:</label>
+            <select id="counter-select">
+                <option value="1">Loket 1</option>
+                <option value="2">Loket 2</option>
+                <option value="3">Loket 3</option>
+            </select>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header>
+            <h1 id="page-title">Panggil Antrian</h1>
+            <div class="header-actions">
+                <button class="btn btn-danger" id="btn-reset" onclick="resetQueue()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                    </svg>
+                    Reset Antrian
+                </button>
+            </div>
+        </header>
+
+        <!-- Queue Section -->
+        <section id="section-queue" class="section active">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-waiting">0</div>
+                    <div class="stat-label">Menunggu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-calling">0</div>
+                    <div class="stat-label">Dipanggil</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-finished">0</div>
+                    <div class="stat-label">Selesai</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-label">Total Hari Ini</div>
+                </div>
+            </div>
+
+            <!-- Current Ticket Being Called -->
+            <div class="current-call-card">
+                <div class="current-label">Sedang Dipanggil</div>
+                <div class="current-number" id="current-called">--</div>
+                <div class="call-actions">
+                    <button class="btn btn-secondary" onclick="recallTicket()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                        </svg>
+                        Panggil Ulang
+                    </button>
+                    <button class="btn btn-primary" onclick="finishAndCallNext()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+                        </svg>
+                        Next Antrian
+                    </button>
+                </div>
+            </div>
+
+            <!-- Queue Categories -->
+            <div class="queue-panels">
+                <!-- Category A -->
+                <div class="queue-panel">
+                    <div class="panel-header panel-blue">
+                        <span>A - Periksa Lab</span>
+                        <span class="queue-count" id="count-A">0</span>
+                    </div>
+                    <div class="queue-list" id="queue-A"></div>
+                </div>
+
+                <!-- Category B -->
+                <div class="queue-panel">
+                    <div class="panel-header panel-green">
+                        <span>B - PCR / Swab</span>
+                        <span class="queue-count" id="count-B">0</span>
+                    </div>
+                    <div class="queue-list" id="queue-B"></div>
+                </div>
+
+                <!-- Category C -->
+                <div class="queue-panel">
+                    <div class="panel-header panel-orange">
+                        <span>C - Pengambilan Hasil</span>
+                        <span class="queue-count" id="count-C">0</span>
+                    </div>
+                    <div class="queue-list" id="queue-C"></div>
+                </div>
+            </div>
+
+            <!-- Manual Actions -->
+            <div class="manual-input-card">
+                <h3>Aksi Manual</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <!-- Call Specific -->
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Panggil Nomor
+                            Khusus</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="manual-call-code" placeholder="Contoh: A-005"
+                                style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            <button class="btn btn-primary" onclick="callManualTicket()">Panggil</button>
+                        </div>
+                    </div>
+
+                    <!-- Create New -->
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Buat Antrian Baru
+                            (Print)</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="manual-category"
+                                style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                <option value="1">A - Periksa Lab</option>
+                                <option value="2">B - PCR / Swab</option>
+                                <option value="3">C - Pengambilan Hasil</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="createManualTicket()">Buat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="section-settings" class="section">
+            <div class="settings-card">
+                <h3>Pengaturan Video Display</h3>
+                <div class="form-group">
+                    <label>URL Video (YouTube embed, atau kosong)</label>
+                    <input type="text" id="video-url" placeholder="https://www.youtube.com/embed/...">
+                </div>
+                <div class="form-group">
+                    <label>Judul Info</label>
+                    <input type="text" id="video-title" value="Pentingnya Mencuci Tangan">
+                </div>
+                <div class="form-group">
+                    <label>Subtitle</label>
+                    <input type="text" id="video-subtitle" value="Tips Kesehatan Harian">
+                </div>
+                <button class="btn btn-primary" onclick="updateVideoSettings()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+                    </svg>
+                    Simpan Pengaturan
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../shared/websocket.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
