@@ -14,6 +14,7 @@ COPY backend/ ./backend/
 
 # Build the backend
 WORKDIR /app/backend
+RUN go mod tidy
 RUN go build -o main ./cmd/server/main.go
 
 # Final Stage
