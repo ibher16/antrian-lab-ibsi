@@ -12,14 +12,21 @@ import (
 var DB *sql.DB
 
 func InitDB() {
-	// 1. Connect to MySQL Server (without DB) to create it if missing
+	// 1. Determine DSN
+	dsn := os.Getenv("DATABASE_URL")
 	dsnRoot := os.Getenv("DB_ROOT_DSN")
-	if dsnRoot == "" {
-		dsnRoot = "root:@tcp(127.0.0.1:3306)/" // Default for local dev
+
+	// If env vars are empty, we use Easypanel defaults as fallback
+	if dsn == "" {
+		// Use 'go-mysql' host and 'golang' credentials as default for Easypanel
+		dsn = "golang:golang@tcp(go-mysql:3306)/ibnu_sina_queue?parseTime=true"
+		dsnRoot = "golang:golang@tcp(go-mysql:3306)/"
 	}
+
+	// 2. Connect to MySQL Server (without DB) to create it if missing
 	dbRoot, err := sql.Open("mysql", dsnRoot)
 	if err != nil {
-		log.Printf("Warning: Could not connect to MySQL root to check DB: %v", err)
+		log.Printf("Warning: Could not connect to MySQL root: %v", err)
 	} else {
 		_, err = dbRoot.Exec("CREATE DATABASE IF NOT EXISTS ibnu_sina_queue")
 		if err != nil {
@@ -30,12 +37,7 @@ func InitDB() {
 		dbRoot.Close()
 	}
 
-	// 2. Connect to the specific Database
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		dsn = "root:@tcp(127.0.0.1:3306)/ibnu_sina_queue?parseTime=true"
-	}
-
+	// 3. Connect to the specific Database
 	DB, err = sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
