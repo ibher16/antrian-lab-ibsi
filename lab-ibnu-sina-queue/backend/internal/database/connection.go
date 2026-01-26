@@ -57,7 +57,7 @@ func InitDB() {
 		log.Fatal("Could not connect to database:", err)
 	}
 
-	log.Println("Connected to MySQL Database!")
+	log.Printf("Successfully connected to Database: %s", dsn)
 
 	// Auto-Migrate
 	migrate()
