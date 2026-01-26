@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - STATIC_FILES_PATH=./frontend
+      - DATABASE_URL=golang:golang@tcp(db:3306)/ibnu_sina_queue?parseTime=true
+      - DB_ROOT_DSN=golang:golang@tcp(db:3306)/
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=golang
+      - MYSQL_DATABASE=ibnu_sina_queue
+      - MYSQL_USER=golang
+      - MYSQL_PASSWORD=golang
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "golang", "-pgolang"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 
 	"log"
 	"net/http"
@@ -57,27 +58,34 @@ func main() {
 	// =====================
 	// Serve Static Files
 	// =====================
-	r.PathPrefix("/kiosk/").Handler(http.StripPrefix("/kiosk/", http.FileServer(http.Dir("../frontend/kiosk"))))
-	r.PathPrefix("/display/").Handler(http.StripPrefix("/display/", http.FileServer(http.Dir("../frontend/display"))))
-	r.PathPrefix("/admin/").Handler(http.StripPrefix("/admin/", http.FileServer(http.Dir("../frontend/admin"))))
-	r.PathPrefix("/shared/").Handler(http.StripPrefix("/shared/", http.FileServer(http.Dir("../frontend/shared"))))
+	staticDir := os.Getenv("STATIC_FILES_PATH")
+	if staticDir == "" {
+		staticDir = "../frontend"
+	}
+
+	r.PathPrefix("/kiosk/").Handler(http.StripPrefix("/kiosk/", http.FileServer(http.Dir(staticDir+"/kiosk"))))
+	r.PathPrefix("/display/").Handler(http.StripPrefix("/display/", http.FileServer(http.Dir(staticDir+"/display"))))
+	r.PathPrefix("/admin/").Handler(http.StripPrefix("/admin/", http.FileServer(http.Dir(staticDir+"/admin"))))
+	r.PathPrefix("/shared/").Handler(http.StripPrefix("/shared/", http.FileServer(http.Dir(staticDir+"/shared"))))
 
 	// Default redirect to kiosk
 	r.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, "/kiosk/", http.StatusFound)
 	})
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:8080",
+		Addr:         "0.0.0.0:" + port,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	fmt.Println("Server running on http://127.0.0.1:8080")
-	fmt.Println("  Kiosk:   http://127.0.0.1:8080/kiosk/")
-	fmt.Println("  Display: http://127.0.0.1:8080/display/")
-	fmt.Println("  Admin:   http://127.0.0.1:8080/admin/")
+	fmt.Printf("Server running on http://0.0.0.0:%s\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
 

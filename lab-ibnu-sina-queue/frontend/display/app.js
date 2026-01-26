@@ -30,7 +30,8 @@ fetch('/api/display/video')
     .catch(console.error);
 
 // WebSocket
-const ws = new QueueWebSocket('ws://localhost:8080/ws', (message) => {
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const ws = new QueueWebSocket(`${protocol}//${window.location.host}/ws`, (message) => {
     console.log('Received:', message);
 
     if (message.type === 'NEW_TICKET') {

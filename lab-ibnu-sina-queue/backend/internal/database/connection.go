@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -12,7 +13,10 @@ var DB *sql.DB
 
 func InitDB() {
 	// 1. Connect to MySQL Server (without DB) to create it if missing
-	dsnRoot := "root:@tcp(127.0.0.1:3306)/"
+	dsnRoot := os.Getenv("DB_ROOT_DSN")
+	if dsnRoot == "" {
+		dsnRoot = "root:@tcp(127.0.0.1:3306)/" // Default for local dev
+	}
 	dbRoot, err := sql.Open("mysql", dsnRoot)
 	if err != nil {
 		log.Printf("Warning: Could not connect to MySQL root to check DB: %v", err)
@@ -27,7 +31,10 @@ func InitDB() {
 	}
 
 	// 2. Connect to the specific Database
-	dsn := "root:@tcp(127.0.0.1:3306)/ibnu_sina_queue?parseTime=true"
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "root:@tcp(127.0.0.1:3306)/ibnu_sina_queue?parseTime=true"
+	}
 
 	DB, err = sql.Open("mysql", dsn)
 	if err != nil {
