@@ -1,6 +1,6 @@
 module lab-ibnu-sina-queue
 
-go 1.25.6
+go 1.21
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
