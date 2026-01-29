@@ -39,3 +39,4 @@ ENV DB_ROOT_DSN=""
 
 # Run the backend
 CMD ["./main"]
+

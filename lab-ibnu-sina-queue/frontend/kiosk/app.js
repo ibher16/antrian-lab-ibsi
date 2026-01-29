@@ -1,8 +1,8 @@
 // Update clock
 function updateTime() {
     const now = new Date();
-    const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    const dateString = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+    const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const dateString = now.toLocaleDateString('id-ID', { weekday: 'long', month: 'short', day: 'numeric' });
 
     document.getElementById('current-time').textContent = timeString;
     document.getElementById('current-date').textContent = dateString;
@@ -12,9 +12,9 @@ updateTime();
 
 // Category Mapping
 const categories = {
-    1: { name: 'Check-up Lab', prefix: 'A' },
-    2: { name: 'PCR / Swab Test', prefix: 'B' },
-    3: { name: 'Result Collection', prefix: 'C' }
+    1: { name: 'Pemeriksaan Lab', prefix: 'A' },
+    2: { name: 'Tes PCR / Swab', prefix: 'B' },
+    3: { name: 'Antrian ke Pemeriksaan Narkoba', prefix: 'C' }
 };
 
 // Select Service
@@ -37,7 +37,7 @@ async function selectService(categoryId) {
 
     } catch (error) {
         console.error('Error creating ticket:', error);
-        alert('System Offline. Please contact staff.');
+        alert('Sistem Offline. Silakan hubungi staf.');
     }
 }
 
