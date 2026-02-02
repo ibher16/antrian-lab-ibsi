@@ -173,7 +173,7 @@ main {
 }
 
 .big-number {
-    font-size: clamp(4rem, 12vw, 15vh);
+    font-size: clamp(3rem, 10vw, 12vh);
     width: 100%;
     text-align: center;
     white-space: nowrap;
