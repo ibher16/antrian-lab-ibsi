@@ -114,11 +114,12 @@ main {
     flex: 1;
     display: grid;
     grid-template-columns: 8fr 4fr;
+    grid-template-rows: 1fr;
     gap: var(--main-gap);
     padding: var(--main-gap);
-    height: calc(100vh - var(--header-height) - var(--footer-height));
     min-height: 0;
-    /* Important for grid clipping */
+    overflow: hidden;
+    /* Prevent content from pushing the grid out */
 }
 
 /* Main Card (Now Serving) */
@@ -173,7 +174,7 @@ main {
 }
 
 .big-number {
-    font-size: clamp(3rem, 10vw, 12vh);
+    font-size: clamp(4rem, 12vh, 15vh);
     width: 100%;
     text-align: center;
     white-space: nowrap;
