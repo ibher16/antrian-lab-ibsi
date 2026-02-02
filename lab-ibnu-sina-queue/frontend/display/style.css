@@ -114,9 +114,10 @@ main {
     flex: 1;
     display: grid;
     grid-template-columns: 8fr 4fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: minmax(0, 1fr);
     gap: var(--main-gap);
     padding: var(--main-gap);
+    padding-bottom: 2.5vh;
     min-height: 0;
     overflow: hidden;
     /* Prevent content from pushing the grid out */
