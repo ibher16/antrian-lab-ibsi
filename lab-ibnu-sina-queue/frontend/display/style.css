@@ -173,16 +173,13 @@ main {
 }
 
 .big-number {
-    font-size: clamp(2rem, 8vw, 10vh);
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
+    font-size: clamp(8rem, 10vh, 20vh);
     /* Scale with height primarily */
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.05em;
     text-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
-    margin-bottom: 1.5vh;
+    margin-bottom: 2vh;
 }
 
 .counter-box {
