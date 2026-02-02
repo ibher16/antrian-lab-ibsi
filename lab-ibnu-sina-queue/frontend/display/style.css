@@ -113,7 +113,7 @@ header {
 main {
     flex: 1;
     display: grid;
-    grid-template-columns: 8.5fr 3.5fr;
+    grid-template-columns: 8fr 4fr;
     gap: var(--main-gap);
     padding: var(--main-gap);
     height: calc(100vh - var(--header-height) - var(--footer-height));
@@ -154,14 +154,14 @@ main {
     color: var(--primary);
     padding: 1vh 3vw;
     border-radius: 999px;
-    margin-bottom: 4vh;
+    margin-bottom: 2vh;
     display: flex;
     align-items: center;
     gap: 1vw;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    font-size: clamp(0.8rem, 2vh, 2.5vh);
+    font-size: clamp(0.7rem, 1.5vh, 2vh);
     animation: pulse 2s infinite;
 }
 
@@ -172,7 +172,7 @@ main {
 }
 
 .big-number {
-    font-size: clamp(8rem, 30vh, 40vh);
+    font-size: clamp(4rem, 12vh, 15vh);
     /* Scale with height primarily */
     font-weight: 900;
     line-height: 0.9;
@@ -190,14 +190,14 @@ main {
     font-size: 1.25rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .counter-pill {
     background: var(--primary);
     padding: 1.5vh 5vw;
     border-radius: 1.5vh;
-    font-size: clamp(1.5rem, 6vh, 8vh);
+    font-size: clamp(1.2rem, 4vh, 5vh);
     font-weight: 800;
     box-shadow: 0 1vh 3vh var(--primary-glow);
 }
@@ -214,7 +214,7 @@ main {
     background: #000;
     border-radius: 1rem;
     border: 1px solid var(--border-dark);
-    aspect-ratio: 16/9;
+    flex: 1;
     position: relative;
     overflow: hidden;
 }
