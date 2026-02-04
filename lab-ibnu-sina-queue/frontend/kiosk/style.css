@@ -372,11 +372,11 @@ footer {
 
     /* Label "NOMOR ANTRIAN" */
     .print-label {
-        font-size: 8pt;
+        font-size: 9pt;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-top: 2mm;
-        color: #333;
+        margin-top: 1mm;
+        color: #000000;
     }
 
     /* Queue Number - BIG */
@@ -416,8 +416,8 @@ footer {
 
     /* Date/Time */
     .print-time {
-        font-size: 8pt;
-        color: #666;
+        font-size: 10pt;
+        color: #000000;
         margin-bottom: 3mm;
     }
 
