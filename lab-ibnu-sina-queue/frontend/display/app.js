@@ -78,14 +78,14 @@ function updateVideoDisplay(data) {
             }
 
             if (videoId) {
-                // Autoplay=1, Mute=1 (Required for autoplay), Loop=1, Playlist=videoId, Controls=1 (Show controls)
-                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0`;
+                // Autoplay=1, Loop=1, Playlist=videoId, Controls=1 (Show controls)
+                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0`;
                 content.innerHTML = `<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             }
         } else {
             // Direct video file
-            // Added 'controls' attribute so user can unmute/adjust volume
-            content.innerHTML = `<video width="100%" height="100%" src="${data.video_url}" autoplay loop muted controls playsinline style="object-fit: cover;"></video>`;
+            // Removed 'muted' attribute so audio can play
+            content.innerHTML = `<video width="100%" height="100%" src="${data.video_url}" autoplay loop controls playsinline style="object-fit: cover;"></video>`;
         }
     }
 }
@@ -232,3 +232,12 @@ function playChime() {
 if ('speechSynthesis' in window) {
     window.speechSynthesis.getVoices();
 }
+
+// Global click handler to "unlock" audio (browser policy)
+document.addEventListener('click', () => {
+    // Resume AudioContext for Chime/TTS if suspended
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+}, { once: true });
