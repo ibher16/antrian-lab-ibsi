@@ -95,28 +95,20 @@ function updateVideoDisplay(data) {
 
     // Update Video
     if (content && data.video_url) {
-        // Simple check for YouTube
-        const isYouTube = data.video_url.includes('youtube.com') || data.video_url.includes('youtu.be');
+        // Robust YouTube ID extraction
+        const ytRegex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        const match = data.video_url.match(ytRegex);
+        const videoId = (match && match[7].length === 11) ? match[7] : null;
 
         // Remove placeholder background
         content.style.backgroundImage = 'none';
 
-        if (isYouTube) {
-            let videoId = '';
-            // Extract Video ID
-            if (data.video_url.includes('watch?v=')) {
-                videoId = data.video_url.split('v=')[1].split('&')[0];
-            } else if (data.video_url.includes('youtu.be/')) {
-                videoId = data.video_url.split('youtu.be/')[1].split('?')[0];
-            }
-
-            if (videoId) {
-                // Autoplay=1, Mute=1 (required for autoplay), Loop=1, Playlist=videoId, Controls=1
-                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0`;
-                content.innerHTML = `<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            }
+        if (videoId) {
+            // Autoplay=1, Mute=1 (required), Loop=1, Playlist=videoId, Controls=1
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0&enablejsapi=1`;
+            content.innerHTML = `<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         } else {
-            // Direct video file (muted required for autoplay)
+            // Direct video file (muted required for reliable autoplay)
             content.innerHTML = `<video width="100%" height="100%" src="${data.video_url}" autoplay loop muted controls playsinline style="object-fit: cover;"></video>`;
         }
     }
