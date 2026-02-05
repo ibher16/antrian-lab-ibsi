@@ -11,6 +11,39 @@ const state = {
     history: []
 };
 
+// Global AudioContext
+let audioCtx = null;
+let audioUnlocked = false;
+
+function initAudioContext() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+}
+
+function unlockAudio() {
+    if (audioUnlocked) return;
+
+    initAudioContext();
+
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+            console.log('AudioContext unlocked');
+            audioUnlocked = true;
+        });
+    } else {
+        audioUnlocked = true;
+    }
+
+    // Warm up speech synthesis
+    if ('speechSynthesis' in window) {
+        const warmup = new SpeechSynthesisUtterance('');
+        warmup.volume = 0;
+        window.speechSynthesis.speak(warmup);
+    }
+}
+
 // Initial Fetch
 fetch('/api/queue/recent')
     .then(res => res.json())
@@ -78,14 +111,13 @@ function updateVideoDisplay(data) {
             }
 
             if (videoId) {
-                // Autoplay=1, Loop=1, Playlist=videoId, Controls=1 (Show controls)
-                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0`;
+                // Autoplay=1, Mute=1 (required for autoplay), Loop=1, Playlist=videoId, Controls=1
+                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0&showinfo=0`;
                 content.innerHTML = `<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             }
         } else {
-            // Direct video file
-            // Removed 'muted' attribute so audio can play
-            content.innerHTML = `<video width="100%" height="100%" src="${data.video_url}" autoplay loop controls playsinline style="object-fit: cover;"></video>`;
+            // Direct video file (muted required for autoplay)
+            content.innerHTML = `<video width="100%" height="100%" src="${data.video_url}" autoplay loop muted controls playsinline style="object-fit: cover;"></video>`;
         }
     }
 }
@@ -198,31 +230,38 @@ function speakLocal(text) {
 function playChime() {
     return new Promise((resolve) => {
         try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc1 = audioCtx.createOscillator();
-            const gain1 = audioCtx.createGain();
+            const ctx = initAudioContext();
+
+            // Try to resume if suspended
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(() => { });
+            }
+
+            const osc1 = ctx.createOscillator();
+            const gain1 = ctx.createGain();
             osc1.connect(gain1);
-            gain1.connect(audioCtx.destination);
+            gain1.connect(ctx.destination);
             osc1.frequency.value = 830;
             osc1.type = 'sine';
-            gain1.gain.setValueAtTime(0.4, audioCtx.currentTime);
-            gain1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-            osc1.start(audioCtx.currentTime);
-            osc1.stop(audioCtx.currentTime + 0.4);
+            gain1.gain.setValueAtTime(0.4, ctx.currentTime);
+            gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+            osc1.start(ctx.currentTime);
+            osc1.stop(ctx.currentTime + 0.4);
 
-            const osc2 = audioCtx.createOscillator();
-            const gain2 = audioCtx.createGain();
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
             osc2.connect(gain2);
-            gain2.connect(audioCtx.destination);
+            gain2.connect(ctx.destination);
             osc2.frequency.value = 622;
             osc2.type = 'sine';
-            gain2.gain.setValueAtTime(0.4, audioCtx.currentTime + 0.2);
-            gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.7);
-            osc2.start(audioCtx.currentTime + 0.2);
-            osc2.stop(audioCtx.currentTime + 0.7);
+            gain2.gain.setValueAtTime(0.4, ctx.currentTime + 0.2);
+            gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.7);
+            osc2.start(ctx.currentTime + 0.2);
+            osc2.stop(ctx.currentTime + 0.7);
 
             setTimeout(resolve, 800);
         } catch (e) {
+            console.error('Chime error:', e);
             resolve();
         }
     });
@@ -233,11 +272,12 @@ if ('speechSynthesis' in window) {
     window.speechSynthesis.getVoices();
 }
 
-// Global click handler to "unlock" audio (browser policy)
-document.addEventListener('click', () => {
-    // Resume AudioContext for Chime/TTS if suspended
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
-}, { once: true });
+// Auto-unlock audio on any user interaction
+document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('touchstart', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
+
+// Try to unlock immediately on page load (works in some browsers)
+setTimeout(() => {
+    unlockAudio();
+}, 100);
